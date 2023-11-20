@@ -226,3 +226,57 @@ SELECT ReasonDescription, ReasonCode, COUNT(ReasonDescription) med_count
 FROM PersonalTutorial.dbo.Medications
 GROUP BY ReasonDescription, ReasonCode
 ORDER BY COUNT(ReasonDescription)DESC
+
+
+--To find the highest healthcare expense
+SELECT MAX(Healthcare_Expenses) highest_amt
+FROM PersonalTutorial.dbo.Patients
+
+--OR
+  
+SELECT TOP 1 *
+FROM 
+(SELECT TOP (3) Healthcare_Expenses
+FROM PersonalTutorial.dbo.Patients
+ORDER BY Healthcare_Expenses DESC) lk
+ORDER BY Healthcare_Expenses
+
+
+--To find the second highest healthcare expense
+SELECT MAX(Healthcare_Expenses) second_highest_amt
+FROM PersonalTutorial.dbo.Patients
+WHERE Healthcare_Expenses <> (SELECT MAX(Healthcare_Expenses) FROM PersonalTutorial.dbo.Patients)
+
+
+
+
+--To get the 3rd highest healthcare expense
+
+--Using the TOP keyword
+SELECT TOP 1 Healthcare_Expenses
+FROM (
+SELECT TOP 3 Healthcare_Expenses
+FROM PersonalTutorial.dbo.Patients
+ORDER BY Healthcare_Expenses DESC) kl
+ORDER BY Healthcare_Expenses 
+
+--OR
+  
+--Using the OFFSET and FETCH clauses
+SELECT Healthcare_Expenses
+FROM PersonalTutorial.dbo.Patients
+ORDER BY Healthcare_Expenses DESC
+OFFSET 2 ROWS
+FETCH NEXT 1 ROW ONLY
+
+--OR
+  
+--Using nested queries
+SELECT MAX(Healthcare_Expenses) Third
+FROM PersonalTutorial.dbo.Patients
+WHERE Healthcare_Expenses < 
+(SELECT MAX(Healthcare_Expenses)
+FROM PersonalTutorial.dbo.Patients
+WHERE Healthcare_Expenses NOT IN
+(SELECT MAX(Healthcare_Expenses)
+FROM PersonalTutorial.dbo.Patients))
