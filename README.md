@@ -10,3 +10,9 @@ In this Exploratory Data Analysis project, I make use of simple SQL queries to d
 • Top 15 years with the most immunizations
 • Number of times each medical procedure was carried out in the hospital
 • And so many more Exploratory Data Analysis questions
+
+
+The datasets for this project can be gotten from https://synthea.mitre.org/
+
+Here's a preview of the project on SQL Server.
+![HH1](https://github.com/Strano1/SQL-for-Healthcare/assets/124494476/2055c65f-b573-4dc3-b17d-d542a416124b)
